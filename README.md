@@ -4,11 +4,11 @@ Cast spells with words! In Spellcaster, a user can chain sequences of keywords t
 
 Example keywords: 
 
-up, down, left, right - determines direction
-all, last, clear - effects preexisting spells
-blue, red, green, yellow - changes background color
-smile, frown, eggplant - creates emoji spells with corresponding properties
-two, three, four, five - creates that many instances of current spell
-spell - creates random spell
-bounce - bounces off walls
-explode - letters of spell each go off in random direction
+* up, down, left, right - determines direction
+* all, last, clear - effects preexisting spells
+* blue, red, green, yellow - changes background color
+* smile, frown, eggplant - creates emoji spells with corresponding properties
+* two, three, four, five - creates that many instances of current spell
+* spell - creates random spell
+* bounce - bounces off walls
+* explode - letters of spell each go off in random direction
