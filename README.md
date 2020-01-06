@@ -6,6 +6,8 @@ Example keywords:
 
 * up, down, left, right - determines direction
 * all, last, clear - effects preexisting spells
+* mono, sans, serif - sets font type
+* big, small - sets font size
 * blue, red, green, yellow - changes background color
 * smile, frown, eggplant - creates emoji spells with corresponding properties
 * two, three, four, five - creates that many instances of current spell
