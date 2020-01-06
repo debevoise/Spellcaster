@@ -1,0 +1,24 @@
+{
+  "name": "spellcaster",
+  "version": "1.0.0",
+  "description": "",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "webpack": "webpack --watch --mode=development"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/debevoise/SpellCaster.git"
+  },
+  "author": "Simon DeBevoise",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/debevoise/SpellCaster/issues"
+  },
+  "homepage": "https://github.com/debevoise/SpellCaster#readme",
+  "dependencies": {
+    "webpack": "^4.41.5",
+    "webpack-cli": "^3.3.10"
+  }
+}
