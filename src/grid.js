@@ -32,17 +32,4 @@ export default class Grid {
         return grid;
     }
 
-    // populate() {
-    //     for (let i = 0; i < this.height; i++) {
-    //         let row = document.createElement('ul');
-    //         row.className = 'row';
-    //         for (let j = 0; j < this.width; j++) {
-    //             let cell = document.createElement('div')
-    //             cell.className = 'cell';
-    //             row.appendChild(cell);
-    //         }
-
-    //         this.root.appendChild(row);
-    //     }
-    // }
 }
