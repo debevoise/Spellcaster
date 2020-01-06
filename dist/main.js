@@ -86,14 +86,27 @@
 /************************************************************************/
 /******/ ({
 
+/***/ "./src/grid.js":
+/*!*********************!*\
+  !*** ./src/grid.js ***!
+  \*********************/
+/*! exports provided: default */
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+eval("__webpack_require__.r(__webpack_exports__);\n/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, \"default\", function() { return Grid; });\nclass Grid {\n    constructor(root, input) {\n        this.root = root;\n        this.input = input;\n\n        this.CELLSIZE = 30;\n\n        this.height = Math.floor(root.offsetHeight / this.CELLSIZE);\n        this.width = Math.floor(root.offsetWidth / this.CELLSIZE);\n\n        this.grid = this.populate();\n\n        console.log(this.height, this.width)\n    }\n\n    populate() {\n        let grid = [];\n        for (let i = 0; i < this.height; i++) {\n            let rowArr = [];\n            let row = document.createElement('ul');\n            row.className = 'row';\n            for (let j = 0; j < this.width; j++) {\n                let cell = document.createElement('div')\n                cell.className = 'cell';\n                rowArr.push(cell);\n                row.appendChild(cell);\n            }\n            this.root.appendChild(row);\n            grid.push(rowArr);\n        }\n\n        return grid;\n    }\n\n    // populate() {\n    //     for (let i = 0; i < this.height; i++) {\n    //         let row = document.createElement('ul');\n    //         row.className = 'row';\n    //         for (let j = 0; j < this.width; j++) {\n    //             let cell = document.createElement('div')\n    //             cell.className = 'cell';\n    //             row.appendChild(cell);\n    //         }\n\n    //         this.root.appendChild(row);\n    //     }\n    // }\n}\n\n//# sourceURL=webpack:///./src/grid.js?");
+
+/***/ }),
+
 /***/ "./src/index.js":
 /*!**********************!*\
   !*** ./src/index.js ***!
   \**********************/
-/*! no static exports found */
-/***/ (function(module, exports) {
+/*! no exports provided */
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
 
-eval("\n\n//# sourceURL=webpack:///./src/index.js?");
+"use strict";
+eval("__webpack_require__.r(__webpack_exports__);\n/* harmony import */ var _grid__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ./grid */ \"./src/grid.js\");\n\n\ndocument.addEventListener('DOMContentLoaded', () => {\n    const root = document.getElementById('root');\n    const input = document.getElementById('input');\n\n    const grid = new _grid__WEBPACK_IMPORTED_MODULE_0__[\"default\"](root, input);\n})\n\n//# sourceURL=webpack:///./src/index.js?");
 
 /***/ })
 

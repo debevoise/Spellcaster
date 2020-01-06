@@ -1,0 +1,20 @@
+.cell {
+    height: 30px;
+    width: 30px;
+    box-sizing: border-box;
+    border-right: 1px dashed gray;
+}
+
+.cell:first-child {
+    border-left: 1px dashed gray;
+}
+
+.row {
+    display: flex;
+    justify-content: center;
+    box-sizing: border-box;
+}
+
+.row {
+    border-bottom: 1px dashed gray;
+}
