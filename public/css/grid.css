@@ -3,7 +3,14 @@
     width: 30px;
     box-sizing: border-box;
     border-right: 1px dashed gray;
+    display: flex;
+    justify-content: center;
+    align-items: center;
 }
+
+
+
+
 
 .cell:first-child {
     border-left: 1px dashed gray;
