@@ -15,6 +15,10 @@ Cast spells with words! In Spellcaster, a user can chain sequences of keywords t
 * bounce - bounces off walls
 * explode - letters of spell each go off in random direction
 
+#### Preliminary mockup
+
+![mockup](https://github.com/debevoise/SpellCaster/blob/master/public/mockups/Screen%20Shot%202020-01-06%20at%2012.20.16%20PM.png)
+
 ## Functionality/MVP
 
 * informational section with about and help tutorial
