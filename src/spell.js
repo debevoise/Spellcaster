@@ -16,7 +16,7 @@ export default class Spell {
         this.keywordIndex = keywordIndex;
 
         this.moves = [0,0];
-        this.color = 'red';
+        this.colors = [];
         this.font = 'mono';
         this.size = 15;
 
@@ -29,15 +29,23 @@ export default class Spell {
         this.render();
     }
 
+    deleteCharacter() {
+        if (this.activeText) {
+            this.activeText = this.activeText.slice(0, this.activeText.length - 1);
+        } 
+    }
+
     cast(keywords) {
         if (!(keywords instanceof Array)) keywords = [keywords];
-        const notStored = ['all', 'clear'];
+        const notStored = ['all', 'clear', 'spell', 'fast', 'slow'];
 
         keywords.forEach(kw => {
             this.applyKeyword(kw);
             if (!notStored.includes(kw)) this.appliedKeywords.push(kw); 
         });
     }
+
+
 
     applyKeyword(kw) {
         let { action, type } = this.keywordIndex[kw];
@@ -47,10 +55,42 @@ export default class Spell {
                 this.moves = Util.addCoordinates(this.moves, action)
                 break;
             case 'color': 
-                this.color = action;
+                this.colors.push(action);
                 break;
             case 'font':
+                this.emoji = false;
                 this.font = action;
+                break;
+            case 'speed':
+                let newfps = Math.floor(this.grid.framerate * action);
+                if (newfps > 4000) {
+                  this.grid.framerate = 40000;
+                } else if (newfps < 100) {
+                  this.grid.framerate = 100;
+                } else {
+                  this.grid.framerate = newfps;
+                }
+                break;
+            case 'fontsize':
+                let newsize = Math.floor(this.size * action);
+                if (newsize > 40) {
+                    this.size = 40;
+                } else if (newsize < 6) {
+                    this.size = 6;
+                } else {
+                    this.size = newsize;
+                }
+                console.log(this.size);
+                break;
+            case 'clear':
+                this.grid.spells.forEach(spell => spell.clearPreviousRender());
+                this.grid.spells = [];
+                break;
+            case 'emoji':
+                this.emoji = true;
+                break;
+            case 'spell':
+                this.generateRandomSpell();
                 break;
             case 'all':
                 this.grid.spells.forEach(spell => spell.cast(this.appliedKeywords));
@@ -69,8 +109,8 @@ export default class Spell {
             let kw = this.containsKeyword(substr);
 
             if (kw) {
-                this.cast(kw);
                 this.storedText += substr;
+                this.cast(kw);
                 this.activeText = this.activeText.slice(i);
                 this.extractKeywords();
             }
@@ -95,6 +135,29 @@ export default class Spell {
         this.render();
     }
 
+    shuffleColors() {
+        if (this.colors.length === 0) return 'none';
+        if (this.colors.length === 1 ) return this.colors[0]
+        this.colors.push(this.colors.shift());
+        return this.colors[1];
+    }
+
+    generateRandomSpell() {
+        let keywords = Object.keys(this.keywordIndex);
+        console.log(keywords);
+        let appliedKeywords = '';
+
+        for (let i = 0; i < 5; i++) {
+            let randIdx = Math.floor(Math.random() * (keywords.length - 3)) + 3; 
+            console.log(randIdx);
+            appliedKeywords += keywords[randIdx];
+        }
+        console.log(appliedKeywords);
+        let spell = new Spell(this.grid);
+        spell.receive(appliedKeywords);
+        this.grid.spells.push(spell);
+    }
+
     render() {
         this.clearPreviousRender();
 
@@ -110,17 +173,28 @@ export default class Spell {
         }
 
         for (let i = 0; i < text.length; i++) {
-            const letter = text[i];
+            const letter = this.emoji ? Util.toEmoji(text[i]) : text[i];
             const span = document.createElement('span');
 
-            span.textContent = letter;
-            span.classList.add(this.size, this.color, this.font, 'active');
-
+            span.textContent = letter.toUpperCase();
+            span.classList.add(this.font, 'active');
+            span.style.fontSize = this.size + 'px';
+            span.style.backgroundColor = this.shuffleColors();
+            if (this.colors.length > 0) span.style.color = 'white'; 
             const element = this.grid.getElement(pos);
+            
             Util.replaceChildren(element, span);
             this.renderedElements.push(span);
             pos = Util.addCoordinates(pos, delta);
         }
+
+        if (this.grid.currentSpell === this) {
+            const span = document.createElement("span");
+            span.className = 'cursor';
+            const element = this.grid.getElement(pos);
+            Util.replaceChildren(element, span);
+            this.renderedElements.push(span);
+        };
     }
 
 }

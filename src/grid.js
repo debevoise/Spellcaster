@@ -1,21 +1,25 @@
 import Spell from './spell';
+import * as Util from './util'
 
 export default class Grid {
     constructor(root, input) {
         this.root = root;
         this.input = input;
         
-        this.CELLSIZE = 30;
+        this.CELLSIZE = 25;
         this.cursorPos = [0,0];
-        this.height = Math.floor(root.offsetHeight / this.CELLSIZE);
+        this.height = Math.floor(root.offsetHeight / this.CELLSIZE) - 1;
         this.width = Math.floor(root.offsetWidth / this.CELLSIZE);
         this.spells = [];
         this.currentSpell = new Spell(this);
         this.framerate = 200;
         this.grid = this.populate();
+        this.play = true;
 
+        this.resizeGrid = this.resizeGrid.bind(this);
         this.receiveInput = this.receiveInput.bind(this);
         document.addEventListener("keydown", this.receiveInput);
+        window.onresize = this.resizeGrid;
     }
  
     populate() {
@@ -37,11 +41,30 @@ export default class Grid {
         return grid;
     }
 
+    clearGridElements() {
+        while (this.root.firstChild) {
+            this.root.firstChild.remove();
+        }
+    }
+
+    resizeGrid() {
+        let root = document.getElementById('root');
+        this.clearGridElements();
+        this.height = Math.floor(root.offsetHeight / this.CELLSIZE) - 1;
+        this.width = Math.floor(root.offsetWidth / this.CELLSIZE);
+        this.grid = this.populate();
+    }
+
     nextSpell() {
-        // if (this.currentSpell.appliedKeywords.length > 0) {
+        if (this.currentSpell.storedText || this.currentSpell.activeText) {
             this.spells.push(this.currentSpell);
-        // }
-        this.currentSpell = new Spell(grid);
+            this.currentSpell = new Spell(grid);
+        } else {
+            let prevSpell = this.currentSpell;
+            this.currentSpell = new Spell(grid);
+            prevSpell.render()
+        }
+        
     }
 
     getElement(coordinates) {
@@ -52,6 +75,28 @@ export default class Grid {
         return this.grid[x][y];
     }
 
+    updateCurrentPosition(keycode) {
+        let { currentPos } = this.currentSpell;
+        let delta; 
+
+        switch (keycode) {
+          case 37:
+            delta = [0, -1];
+            break;
+          case 38:
+            delta = [-1, 0];
+            break;
+          case 39:
+            delta = [0, 1];
+            break;
+          case 40:
+            delta = [1, 0];
+            break;
+        }
+
+        this.currentSpell.currentPos = Util.addCoordinates(delta, currentPos);
+        this.currentSpell.render();
+    }
 
     randomPosition() {
         let x = Math.floor(Math.random() * this.height);
@@ -62,22 +107,27 @@ export default class Grid {
 
     receiveInput(e) {
         // e.preventDefault();
+
         if (e.keyCode === 13 || e.keyCode === 32) {
             this.nextSpell();
         } else if (e.keyCode >= 65 && e.keyCode < 91) {
             this.currentSpell.receive(e.key);
-            console.log(this.currentSpell.storedText, this.currentSpell.activeText)
+        } else if (e.keyCode === 8 && this.currentSpell) {
+            this.currentSpell.deleteCharacter();
+        } else if (e.keyCode <= 40 && e.keyCode >= 37) {
+            this.updateCurrentPosition(e.keyCode);
         }
     } 
 
     frame() {
-        this.currentSpell.move();
         this.spells.forEach(spell => spell.move());
+        this.currentSpell.move();
     }
+
+
 
     animate(rate) {
         this.framerate = rate || this.framerate;
-
         this.timeout = setTimeout(() => {
             this.frame();
             this.animate();

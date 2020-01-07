@@ -9,3 +9,41 @@ export function replaceChildren(parent, child) {
 
     parent.appendChild(child);
 }
+
+export function toEmoji(str) {
+    str = str.toLowerCase();
+
+    let EMOJIS = [
+      "😠",
+      "😳",
+      "👨‍👨‍👦",
+      "🍆",
+      "🐵",
+      "🐱",
+      "💩",
+      "🌞",
+      "🌈",
+      "🌊",
+      "🗽",
+      "🛸",
+      "👨‍👨‍👦",
+      "🥓",
+      "👌",
+      "🏞",
+      "🎢",
+      "🚖",
+      "🍩",
+      "🍔",
+      "🇮🇷",
+      "🤥",
+      "👂",
+      "☢",
+      "🈵",
+      "🤣"
+    ];
+
+
+    let code = str.charCodeAt(0) - 97;
+    return EMOJIS[code];
+
+}
