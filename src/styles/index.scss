@@ -1,0 +1,101 @@
+#logo {
+    cursor: pointer;
+}
+
+.dropdown {
+    position: relative;
+    z-index: 10;
+    padding: 7px;
+
+}
+
+.dropdown-content {
+    position: absolute;
+    display: none;
+    cursor: default;
+    top: 27px;
+    right: 7px;
+    z-index: 4;
+    color: rgb(0, 55, 206);
+    font-size: 15px;
+    width: 300px;
+    line-height: 120%;
+    text-transform: none;
+    letter-spacing: 0;
+    background-color: rgb(251, 236, 208);;
+    border: 2px solid rgb(0, 55, 206);
+    padding: 15px;
+    box-sizing: content-box;
+    box-shadow: 5px 5px rgba(0, 55, 206, 0.3);
+}
+
+#instructions-menu {
+    width: 400px;
+}
+
+.dropdown-content.active {
+    display: block;
+}
+
+.dropdown-content em {
+
+    background-color: #ffa6008f;
+    padding: 0 3px;
+}
+
+em.spellname {
+    background-color: transparent;
+    color: #c8052f;
+    text-transform: uppercase;
+    padding: 0;
+}
+
+.dropdown-content p {
+    display: block;
+
+    padding-top: 10px;
+}
+
+.dropdown-content a {
+    color: #c8052f;
+}
+
+.dropdown-content a:hover {
+    color: #ffa600;
+
+}
+
+.dropdown:hover {
+    color: #c8052f;
+}
+
+.dropdown:hover .dropdown-content {
+    transition: 200ms;
+    display: block;
+}
+
+.dropdown-content ul {
+    padding-top: 10px;
+    display: flex;
+    flex-wrap: wrap;
+}
+
+.dropdown-content li {
+    cursor: pointer;
+    display: inline-block;
+    padding-bottom: 8px;
+    padding-right: 10px;
+
+}
+
+.dropdown-content li:hover {
+    color: #c8052f;
+}
+
+
+
+.dropdown-content h4 {
+     font-weight: 700;
+    color: #c8052f;
+}
+

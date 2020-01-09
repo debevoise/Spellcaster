@@ -2,6 +2,9 @@ const keywords = {
   all: { type: "all" },
   clear: { type: "clear" },
   spell: { type: "spell" },
+  snake: { type: "snake" },
+  typetest: { type: "typetest" },
+  circle: { type: "circle" },
   fast: { type: "speed", action: 0.8 },
   slow: { type: "speed", action: 1.25 },
   big: { type: "fontsize", action: 1.25 },
@@ -20,7 +23,10 @@ const keywords = {
   green: { type: "color", action: "#57ad6e" },
   yellow: { type: "color", action: "#dbc035" },
   red: { type: "color", action: "#de481b" },
-  emoji: { type: "emoji" }
+  emoji: { type: "emoji" },
+  hello: { type: "text", action: "world" },
+  type: { type: "typetest" },
+  test: { type: "typetest" }
 };
 
 export default keywords;

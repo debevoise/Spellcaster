@@ -8,30 +8,65 @@
     <link rel="stylesheet" type="text/css" href="./public/css/index.css">
     <link rel="stylesheet" type="text/css" href="./public/css/grid.css">
     <link rel="stylesheet" type="text/css" href="./public/css/cell.css">
+    <link rel="stylesheet" type="text/css" href="./public/css/typetest.css">
+    <link rel="stylesheet" type="text/css" href="./dist/main.css">
     <script type="text/javascript" src="./dist/main.js"></script>
     <link href="https://fonts.googleapis.com/css?family=Baskervville|Galindo|IBM+Plex+Mono&display=swap" rel="stylesheet">
     <title>Spellcaster</title>
 </head>
 <body>
     <header>
-        <h2>
+        <h2 id='logo'>
             Spellcaster
         </h2>
         <nav>
-            <div id='about' class='dropdown' onclick='toggleDropdown("about")'>About
+            <div id='about' class='dropdown' onclick='() => toggleDropdown("about")'>About
                 <div class='dropdown-content'>
-                    Cast spells by typing keywords! 
+                    <h4>Whoa! What's that?</h4>
+                    <p>
+                        You almost missed it, a zonky spell just whizzed by your head. Spellcaster is an interactive text canvas where spells reign. A spell is a combination of one or more keywords that control it and other spells' movement, shape, color, and speed around the grid. 
+                    </p>
+                    <p>
+                        Click on <em>Help</em> if you're stuck and need some inspiration, or view all keywords at <em>Index</em>;
+                    </p>
+                    <p>
+                        Check out Spellcaster on <a href="https://github.com/debevoise/Spellcaster" rel="noopener noreferrer" target="_blank">Github</a>. A project by <a href="https://www.linkedin.com/in/simon-debevoise-5303b474/" rel="noopener noreferrer" target="_blank">Simon DeBevoise</a>.
+                    </p>
+
                 </div>
             </div>
             
-            <div id='keywordsIndex' class='dropdown'>Index
-
+            <div id='keywordsIndex' class='dropdown'>Cheatcodes
+                <div class='dropdown-content'>
+                    <h4>Index of all Keywords (click me!)</h4>
+                    <ul id='keywords-list'></ul>
+                    <p>Click on a keyword to attach it to the current spell or <a id='cast-new-spell'>start a new spell instead</a>.</p>
+                </div>
             </div>
 
-            <div>Help</div>
+            <div class='dropdown'>Help
+                <div class='dropdown-content' id='instructions-menu'>
+                    <h4>What am I supposed to do?</h4>
+                    <p>
+                        Type words to cast spells! To get started, <em class='spellname'> Spell</em> will generate a spell with four random keywords. Hit <em>space</em> or <em>enter</em> to initialize a new spell. 
+                    </p>
+                    <p>
+                         Certain keywords will have different effects on a given spell. <em class='spellname'>Up</em> will make a word move up, <em class='spellname'>blue</em> will color it blue, and so forth. Keywords are chainable and can coexist with non-keywords, so "FOO<em class='spellname'>Small</em>BAR<em class='spellname'>Emoji</em>" will make the text smaller and use the emoji keyboard.
+                    </p>
+                    <p>
+                        Some keywords are special and can effect other spells:
+                    </p>
+                    <p>
+                         <em class='spellname'>All</em> will apply all previous keywords in the current spell to every spell on the grid. When everything goes haywire, <em class='spellname'>Clear</em> will give you a fresh start. <em class='spellname'>Slow</em> and <em class='spellname'>Fast</em> also operate globally.
+                    </p>
+                    <p>Use the arrow keys to move the cursor or to play <em class='spellname'>Snake</em>.</p>
+                    <p>For a comprehensive list of keywords, check out <em>Index</em>.</p>
+                </div>
+            </div>
         </nav>
     </header>
     <main id='root'></main>
     <input id='input' type="text">
+
 </body>
 </html>

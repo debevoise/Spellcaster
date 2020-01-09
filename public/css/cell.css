@@ -9,7 +9,7 @@
 
 .cursor {
     box-sizing: border-box;
-    border: 3px solid rgb(204, 87, 52);
+    border: 2px solid #c8052f;
 
 }
 
@@ -29,60 +29,45 @@
     font-family: 'IBM Plex Mono', monospace;
 }
 
+.snake {
+    border: 2px solid indigo;
+    box-sizing: border-box;
+}
+
 .serif {
     font-family: 'Baskervville', serif;
 }
 
-
-.cursor {
-  -webkit-animation: 1s blink step-end infinite;
-  -moz-animation: 1s blink step-end infinite;
-  -ms-animation: 1s blink step-end infinite;
-  -o-animation: 1s blink step-end infinite;
-  animation: 1s blink step-end infinite;
+.snakehead {
+  background-color: indigo;
 }
 
-@keyframes blink {
-  from, to {
-    color: transparent;
-  }
-  50% {
-    color: black;
-  }
+.circle {
+  border-radius: 50%;
 }
 
-@-moz-keyframes blink {
-  from, to {
-    color: transparent;
-  }
-  50% {
-    color: black;
-  }
+.rotate {
+	animation: clock 200ms linear infinite 0s;
+	-ms-animation: clock 200ms linear infinite 0s;
+	-webkit-animation: clock 200ms linear infinite 0s;
+
+	overflow: hidden;
+
 }
 
-@-webkit-keyframes blink {
-  from, to {
-    color: transparent;
-  }
-  50% {
-    color: black;
-  }
+
+@-moz-keyframes clock{
+	0% { opacity: 1; }
+	50% { opacity: 1; -moz-transform: rotate(-180deg); }
+
+}
+@-webkit-keyframes clock{
+	0% { opacity: 1; }
+	50% { opacity: 1; -webkit-transform: rotate(-180deg); }
+}
+@-ms-keyframes clock{
+	0% { opacity: 1; -ms-transform: rotate(-180deg); }
+	50% { opacity: 1; -ms-transform: rotate(-180deg); }
+
 }
 
-@-ms-keyframes blink {
-  from, to {
-    color: transparent;
-  }
-  50% {
-    color: black;
-  }
-}
-
-@-o-keyframes blink {
-  from, to {
-    color: transparent;
-  }
-  50% {
-    color: black;
-  }
-}

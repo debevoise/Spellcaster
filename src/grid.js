@@ -1,5 +1,8 @@
 import Spell from './spell';
 import * as Util from './util'
+import { Snake } from './snake';
+import keywords from "./keywords";
+import { TypeTest } from './typetest';
 
 export default class Grid {
     constructor(root, input) {
@@ -13,8 +16,25 @@ export default class Grid {
         this.spells = [];
         this.currentSpell = new Spell(this);
         this.framerate = 200;
+
+        this.typetest = null;
         this.grid = this.populate();
         this.play = true;
+
+        let keywordsList = document.getElementById("keywords-list");
+        let logo = document.getElementById('logo');
+        let castNewSpell = document.getElementById('cast-new-spell');
+        castNewSpell.onclick = () => this.nextSpell();
+
+        logo.onclick = () => {
+            this.grid.push(this.currentSpell.generateRandomSpell());
+        }
+        Object.keys(keywords).forEach(kw => {
+          let li = document.createElement("li");
+          li.innerText = kw;
+          li.onclick = () => this.currentSpell.receive(kw);
+          keywordsList.appendChild(li);
+        });
 
         this.resizeGrid = this.resizeGrid.bind(this);
         this.receiveInput = this.receiveInput.bind(this);
@@ -56,15 +76,17 @@ export default class Grid {
     }
 
     nextSpell() {
-        if (this.currentSpell.storedText || this.currentSpell.activeText) {
+        if (this.snakeMode()) {
+            this.currentSpell.clearPreviousRender()
+            this.currentSpell = new Spell(grid);
+        } else if (this.currentSpell.storedText || this.currentSpell.activeText) {
             this.spells.push(this.currentSpell);
             this.currentSpell = new Spell(grid);
         } else {
             let prevSpell = this.currentSpell;
             this.currentSpell = new Spell(grid);
             prevSpell.render()
-        }
-        
+        }  
     }
 
     getElement(coordinates) {
@@ -75,8 +97,38 @@ export default class Grid {
         return this.grid[x][y];
     }
 
+
+    snakeMode() {
+        return (this.currentSpell instanceof Snake)
+    }
+
+    playSnake() {
+        let lastSpell = this.currentSpell;
+        this.spells.push(lastSpell);
+        let x = Math.floor(this.height / 2);
+        let y = Math.floor(this.width / 2);
+        
+        let centerPos = [x, y];
+
+        this.currentSpell = new Snake(this, centerPos)
+    }
+
+    playTypetest() {
+        // clearTimeout(this.timeout);
+        if (this.typetest) this.typetest.clearPreviousRender();
+        this.typetest = new TypeTest(this);
+        this.typetest.render();
+        this.spells.push(this.currentSpell);
+        this.currentSpell = null;
+    }
+
+    exitTypetest() {
+        if (this.typetest) this.typetest.clearPreviousRender();
+        this.typetest = null;
+        this.currentSpell = new Spell(this);
+    }
+
     updateCurrentPosition(keycode) {
-        let { currentPos } = this.currentSpell;
         let delta; 
 
         switch (keycode) {
@@ -94,6 +146,12 @@ export default class Grid {
             break;
         }
 
+        if (this.snakeMode()) {
+            this.currentSpell.moves = delta;
+            return;
+        }
+
+        let { currentPos } = this.currentSpell;
         this.currentSpell.currentPos = Util.addCoordinates(delta, currentPos);
         this.currentSpell.render();
     }
@@ -107,30 +165,42 @@ export default class Grid {
 
     receiveInput(e) {
         // e.preventDefault();
-
-        if (e.keyCode === 13 || e.keyCode === 32) {
-            this.nextSpell();
+        if (this.typetest) {
+          this.typetest.receive(e);
+        } else if (e.keyCode === 13 || e.keyCode === 32) {
+          this.nextSpell();
         } else if (e.keyCode >= 65 && e.keyCode < 91) {
-            this.currentSpell.receive(e.key);
+          if (this.snakeMode()) return;
+          this.currentSpell.receive(e.key);
         } else if (e.keyCode === 8 && this.currentSpell) {
-            this.currentSpell.deleteCharacter();
+          if (this.snakeMode()) return;
+          this.currentSpell.deleteCharacter();
         } else if (e.keyCode <= 40 && e.keyCode >= 37) {
-            this.updateCurrentPosition(e.keyCode);
+          this.updateCurrentPosition(e.keyCode);
         }
+
+        
     } 
 
     frame() {
         this.spells.forEach(spell => spell.move());
-        this.currentSpell.move();
+        
+        if (this.typetest) {
+            this.typetest.render()
+        } else this.currentSpell.move();;
     }
 
 
 
     animate(rate) {
+        // if (this.typetest) return;
         this.framerate = rate || this.framerate;
         this.timeout = setTimeout(() => {
+
             this.frame();
             this.animate();
         }, this.framerate);
     }
+
+
 }

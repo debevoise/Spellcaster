@@ -14,7 +14,8 @@ export default class Spell {
         this.storedText = '';
         this.activeText = '';
         this.keywordIndex = keywordIndex;
-
+        this.rotate = null;
+        this.classArr = [];
         this.moves = [0,0];
         this.colors = [];
         this.font = 'mono';
@@ -57,9 +58,16 @@ export default class Spell {
             case 'color': 
                 this.colors.push(action);
                 break;
+            case 'rotate':
+                this.rotate = this.rotate ? null : 'rotate';
+                break;
             case 'font':
                 this.emoji = false;
                 this.font = action;
+                break;
+            case 'snake':
+                this.grid.framerate = 150;
+                this.grid.playSnake();
                 break;
             case 'speed':
                 let newfps = Math.floor(this.grid.framerate * action);
@@ -82,6 +90,9 @@ export default class Spell {
                 }
                 console.log(this.size);
                 break;
+            case 'circle':
+                this.classArr.push('circle');
+                break;
             case 'clear':
                 this.grid.spells.forEach(spell => spell.clearPreviousRender());
                 this.grid.spells = [];
@@ -94,6 +105,9 @@ export default class Spell {
                 break;
             case 'all':
                 this.grid.spells.forEach(spell => spell.cast(this.appliedKeywords));
+                break;
+            case 'typetest':
+                this.grid.playTypetest()
                 break;
             default:
                 break;
@@ -156,6 +170,7 @@ export default class Spell {
         let spell = new Spell(this.grid);
         spell.receive(appliedKeywords);
         this.grid.spells.push(spell);
+        return spell;
     }
 
     render() {
@@ -177,7 +192,7 @@ export default class Spell {
             const span = document.createElement('span');
 
             span.textContent = letter.toUpperCase();
-            span.classList.add(this.font, 'active');
+            span.classList.add(this.font, this.rotate, 'active', ...this.classArr);
             span.style.fontSize = this.size + 'px';
             span.style.backgroundColor = this.shuffleColors();
             if (this.colors.length > 0) span.style.color = 'white'; 

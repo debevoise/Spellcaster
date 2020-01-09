@@ -1,0 +1,35 @@
+.typetest {
+    font-family: 'IBM Plex Mono', monospace;
+    text-transform: none;
+    background-color: rgb(224, 239, 251);
+    border-bottom: 2px solid rgb(224, 239, 251);
+    font-weight: 700;
+    box-sizing: content-box;
+}   
+
+
+.typetest.current {
+    border-bottom: 2px solid rgb(0, 55, 206);
+}
+
+
+
+
+
+.test-padding {
+    background-color: rgb(255, 193, 143);
+}
+
+
+
+.typetest.red {
+    color: #c8052f;
+    background-color: #f1c3cd;
+    border-bottom: 2px solid #c8052f;
+}
+
+.typetest.success {
+    background-color: rgb(148, 255, 180);
+    color: rgb(5, 97, 43);
+    border-bottom: 2px solid rgb(5, 97, 43);
+}

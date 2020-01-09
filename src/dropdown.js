@@ -1,8 +1,10 @@
-export function toggleDropdown(id) {
-    document.getElementById(id).classList.toggle("show");
-    let dds = document.getElementsByClassName('dropdown');
-    dds.forEach(dd => {
-        if (dd.id !== id) dd.classList.remove("show");
-    });
+class DropdownHandler {
+    constructor() {
+
+        this.about = document.getElementById('about')
+        this.keywordsIndex = document.getElementById('keywordsIndex');
+        this.help = document.getElementById('help');
+        
+    }
 }
 
