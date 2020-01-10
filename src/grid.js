@@ -11,7 +11,7 @@ export default class Grid {
         
         this.CELLSIZE = 25;
         this.cursorPos = [0,0];
-        this.height = Math.floor(root.offsetHeight / this.CELLSIZE) - 1;
+        this.height = Math.ceil(root.offsetHeight / this.CELLSIZE) - 2;
         this.width = Math.floor(root.offsetWidth / this.CELLSIZE);
         this.spells = [];
         this.currentSpell = new Spell(this);
@@ -38,7 +38,15 @@ export default class Grid {
 
         this.resizeGrid = this.resizeGrid.bind(this);
         this.receiveInput = this.receiveInput.bind(this);
+        this.receiveClick = this.receiveClick.bind(this);
+
         document.addEventListener("keydown", this.receiveInput);
+
+        this.root.addEventListener("click", (e) => {
+            let { pos } = e.target.dataset;
+            if (pos) this.receiveClick(pos);
+        });
+
         window.onresize = this.resizeGrid;
     }
  
@@ -51,7 +59,9 @@ export default class Grid {
             for (let j = 0; j < this.width; j++) {
                 let cell = document.createElement('div')
                 cell.className = 'cell';
+                cell.dataset.pos = [i, j]
                 rowArr.push(cell);
+
                 row.appendChild(cell);
             } 
             this.root.appendChild(row);
@@ -60,6 +70,7 @@ export default class Grid {
 
         return grid;
     }
+
 
     clearGridElements() {
         while (this.root.firstChild) {
@@ -118,17 +129,25 @@ export default class Grid {
         if (this.typetest) this.typetest.clearPreviousRender();
         this.typetest = new TypeTest(this);
         this.typetest.render();
-        this.spells.push(this.currentSpell);
-        this.currentSpell = null;
+        // this.spells.push(this.currentSpell);
+        // this.currentSpell = null;
     }
 
     exitTypetest() {
         if (this.typetest) this.typetest.clearPreviousRender();
+
         this.typetest = null;
+        this.currentSpell.clearPreviousRender();
         this.currentSpell = new Spell(this);
     }
 
+    receiveClick(pos) {
+        if (this.snakeMode()) return;
+        if (this.currentSpell) this.currentSpell.currentPos = pos;
+    }
+
     updateCurrentPosition(keycode) {
+        
         let delta; 
 
         switch (keycode) {
@@ -153,7 +172,6 @@ export default class Grid {
 
         let { currentPos } = this.currentSpell;
         this.currentSpell.currentPos = Util.addCoordinates(delta, currentPos);
-        this.currentSpell.render();
     }
 
     randomPosition() {
@@ -164,7 +182,6 @@ export default class Grid {
     }
 
     receiveInput(e) {
-        // e.preventDefault();
         if (this.typetest) {
           this.typetest.receive(e);
         } else if (e.keyCode === 13 || e.keyCode === 32) {
@@ -187,16 +204,17 @@ export default class Grid {
         
         if (this.typetest) {
             this.typetest.render()
-        } else this.currentSpell.move();;
+        }
+        this.currentSpell.move();
     }
 
 
 
     animate(rate) {
         // if (this.typetest) return;
+
         this.framerate = rate || this.framerate;
         this.timeout = setTimeout(() => {
-
             this.frame();
             this.animate();
         }, this.framerate);

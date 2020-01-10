@@ -25,8 +25,9 @@
     display: flex;
     justify-content: center;
     box-sizing: border-box;
+    border-bottom: 1px dashed rgb(0, 55, 206);
 }
 
-.row {
-    border-bottom: 1px dashed rgb(0, 55, 206);
+.row:last-of-type {
+    border-bottom: 2px solid #c8052f;
 }

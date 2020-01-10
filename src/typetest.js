@@ -24,19 +24,58 @@ export class TypeTest {
     }
 
     over() {
+        
+        this.clearPreviousRender();
+        let loserSpell = new Spell(this.grid);
 
+        loserSpell.cast(["big", "red", "yellow", "mono", "right", 'down', "big"]);
+        loserSpell.storedText =
+         (this.calculateWPM() + ' WPM');
+        this.grid.spells.push(loserSpell);
+
+        this.grid.exitTypetest();
+    }
+
+    calculateWPM() {
+        if (!this.currentTime) return 0;
+        let correctKeystrokes = 0;
+
+        for (let i = 0; i < this.currentWord; i++) {
+            let word = this.userWords[i];
+
+            if (!word.mistyped) {
+                correctKeystrokes += (word.word.length + 1);
+            }
+        }
+
+        return Math.floor(correctKeystrokes / 5);
     }
 
     clearPreviousRender() {
         this.renderedElements.forEach(ele => ele.remove());
     }
 
+    timesUp() {
+        if (!this.currentTime) return false;
+
+        let now = new Date();
+        let timeLeft =
+          60 - Math.floor((now.getTime() - this.currentTime.getTime()) / 1000);
+        return (timeLeft < 0);
+        
+    }
+
     render() {
         this.clearPreviousRender();
+        if (this.timesUp()) {
+            this.over()
+            return;
+        }
+        
         this.renderPadding();
         this.renderWordDisplay()
         this.renderInput();
-        console.log(this.calculateTime())
+
     }  
     
     renderPadding() {
@@ -60,7 +99,7 @@ export class TypeTest {
         let top = this.numRows + this.pos[0] + 2;
         let left = this.pos[1];
         let inputwidth = this.width - 6;
-        let timeStart = this.width + 2;
+        let timeStart = this.width;
         let time = this.calculateTime()
 
         for (let i = 0; i < inputwidth; i++) {
@@ -72,6 +111,7 @@ export class TypeTest {
             if (this.input[i]) child.innerText = this.input[i];
             if (i === this.input.length) child.classList.add('current');
             replaceChildren(el, child);
+            timeStart = i + left + 3;
         }
 
 
@@ -107,10 +147,7 @@ export class TypeTest {
             if (row === 0) firstColLength = wordsRendered;
 
         }
-
-        if (wordsRendered <= 8) {
-            this.numRows = 5;
-        } 
+ 
         this.renderedWordEnd = this.renderedWordBegin + firstColLength;
 
         if (this.currentWord >= this.renderedWordEnd) {
@@ -119,13 +156,17 @@ export class TypeTest {
     }
 
     calculateTime() {
+        
         if (!this.currentTime) return '1:00';
 
         let now = new Date();
         let timeLeft = 60 - Math.floor((now.getTime() - this.currentTime.getTime()) / 1000);
 
-        if (timeLeft < 0) return '0:00';
-        
+        if (timeLeft < 0) {
+            
+            return '0:00';
+        }
+
         let min = Math.floor(timeLeft / 60);
         let sec = timeLeft % 60;
         sec = (sec < 10) ? '0' + sec : sec.toString();
@@ -197,7 +238,7 @@ export class TypeTest {
 
     calculatePos() {
         let x = 5;
-        let y = Math.floor((0.3 * this.grid.width) / 2);
+        let y = Math.ceil((0.3 * this.grid.width) / 2);
         return [x, y];
     }
 

@@ -12,7 +12,11 @@ export class Snake {
         head.innerText = "🐍";
         this.body = [head]; // [{ element: <span>, pos: }]
         this.grid = grid;
-
+        let inst = new Spell(this.grid);
+        inst.storedText = 'arrow keys to move';
+        inst.moves = [0, 1];
+        inst.cast(['red', 'blue']);
+        this.grid.spells.push(inst);
     }
 
     isEmpty(pos) {
@@ -25,13 +29,12 @@ export class Snake {
     }
 
     handleLoss() {
-        debugger
+
         this.clearPreviousRender();
         let loserSpell = new Spell(this.grid);
 
-
-        loserSpell.cast(['fun','red','green','yellow','right']);
-        loserSpell.storedText = 'YOULOSTSNAKE: ' + this.body.length + ' POINTS';
+        loserSpell.cast(['circle','blue','sans','right','big']);
+        loserSpell.storedText = 'Game over: ' + (this.body.length - 1) + ' POINTS';
         this.grid.spells.push(loserSpell);
         this.grid.currentSpell = new Spell(this.grid);
     }
@@ -74,7 +77,7 @@ export class Snake {
 
     eat(pos) {
         let snack = this.grid.getElement(pos).firstChild;
-        debugger
+
         this.body.push(snack);
 
     }

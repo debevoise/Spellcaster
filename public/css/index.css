@@ -14,7 +14,7 @@ body {
 header {
     display: flex;
     justify-content: space-between;
-    color: rgb(0, 55, 206);
+    color: #0037ce;
     background-color: #ffa600;
     border-bottom: 2px solid #c8052f;
     letter-spacing: 5px;
@@ -50,6 +50,7 @@ nav > div {
     flex-grow: 1;
     
 }
+
 
 #ambient-audio {
     display: none;

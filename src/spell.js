@@ -38,7 +38,7 @@ export default class Spell {
 
     cast(keywords) {
         if (!(keywords instanceof Array)) keywords = [keywords];
-        const notStored = ['all', 'clear', 'spell', 'fast', 'slow'];
+        const notStored = ['all', 'clear', 'spell', 'snake', 'test'];
 
         keywords.forEach(kw => {
             this.applyKeyword(kw);
@@ -79,6 +79,9 @@ export default class Spell {
                   this.grid.framerate = newfps;
                 }
                 break;
+            case 'text':
+                this.storedText += action;
+                break;
             case 'fontsize':
                 let newsize = Math.floor(this.size * action);
                 if (newsize > 40) {
@@ -88,7 +91,6 @@ export default class Spell {
                 } else {
                     this.size = newsize;
                 }
-                console.log(this.size);
                 break;
             case 'circle':
                 this.classArr.push('circle');
@@ -107,7 +109,13 @@ export default class Spell {
                 this.grid.spells.forEach(spell => spell.cast(this.appliedKeywords));
                 break;
             case 'typetest':
-                this.grid.playTypetest()
+                let inst = new Spell(this.grid);
+                inst.cast(['right', 'green']);
+                inst.storedText = 'press esc to exit';
+                inst.currentPos = [1,1];
+                this.grid.currentSpell = inst;
+
+                this.grid.playTypetest();
                 break;
             default:
                 break;
@@ -153,7 +161,7 @@ export default class Spell {
         if (this.colors.length === 0) return 'none';
         if (this.colors.length === 1 ) return this.colors[0]
         this.colors.push(this.colors.shift());
-        return this.colors[1];
+        return this.colors[0];
     }
 
     generateRandomSpell() {
@@ -161,8 +169,8 @@ export default class Spell {
         console.log(keywords);
         let appliedKeywords = '';
 
-        for (let i = 0; i < 5; i++) {
-            let randIdx = Math.floor(Math.random() * (keywords.length - 3)) + 3; 
+        for (let i = 0; i < 4; i++) {
+            let randIdx = Math.floor(Math.random() * (keywords.length - 6)) + 6; 
             console.log(randIdx);
             appliedKeywords += keywords[randIdx];
         }

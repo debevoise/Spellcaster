@@ -3,7 +3,8 @@ const keywords = {
   clear: { type: "clear" },
   spell: { type: "spell" },
   snake: { type: "snake" },
-  typetest: { type: "typetest" },
+  type: { type: "typetest" },
+  test: { type: "typetest" },
   circle: { type: "circle" },
   fast: { type: "speed", action: 0.8 },
   slow: { type: "speed", action: 1.25 },
@@ -25,8 +26,11 @@ const keywords = {
   red: { type: "color", action: "#de481b" },
   emoji: { type: "emoji" },
   hello: { type: "text", action: "world" },
-  type: { type: "typetest" },
-  test: { type: "typetest" }
+  about: { type: 'text', action: "made by simon debevoise" },
+  tobe: { type: 'text', action: '...or not to be'},
+  foo: { type: 'text', action: 'bar' }
+  
+
 };
 
 export default keywords;
