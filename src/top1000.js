@@ -1002,4 +1002,3 @@ neck
 `;
 
 export default top1000;
-console.log(top1000);

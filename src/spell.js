@@ -11,7 +11,7 @@ export default class Spell {
 
         this.storedText = '';
         this.activeText = '';
-        
+
         this.keywordIndex = keywordIndex;
 
         this.rotate = null;
@@ -45,8 +45,6 @@ export default class Spell {
             if (!notStored.includes(kw)) this.appliedKeywords.push(kw); 
         });
     }
-
-
 
     applyKeyword(kw) {
         let { action, type } = this.keywordIndex[kw];
@@ -160,15 +158,12 @@ export default class Spell {
 
     generateRandomSpell() {
         let keywords = Object.keys(this.keywordIndex);
-        console.log(keywords);
         let appliedKeywords = '';
 
         for (let i = 0; i < 4; i++) {
             let randIdx = Math.floor(Math.random() * (keywords.length - 6)) + 6; 
-            console.log(randIdx);
             appliedKeywords += keywords[randIdx];
         }
-        console.log(appliedKeywords);
         let spell = new Spell(this.grid);
         spell.receive(appliedKeywords);
         this.grid.spells.push(spell);

@@ -8,6 +8,7 @@
     min-width: 108%;
     position: absolute;
     right: -1px;
+    z-index: 2;
     animation-name: blink;
     animation-duration: 800ms;
     animation-iteration-count: infinite;

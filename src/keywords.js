@@ -10,7 +10,6 @@ const keywords = {
   slow: { type: "speed", action: 1.25 },
   big: { type: "fontsize", action: 1.25 },
   little: { type: "fontsize", action: 0.8 },
-  help: { type: "info", action: "help" },
   up: { type: "move", action: [-1, 0] },
   down: { type: "move", action: [1, 0] },
   left: { type: "move", action: [0, -1] },
@@ -31,7 +30,8 @@ const keywords = {
   emoji: { type: "emoji" },
   hello: { type: "text", action: "world" },
   madeby: { type: "text", action: " simon debevoise" },
-  foo: { type: "text", action: "bar" }
+  foo: { type: "text", action: "bar" },
+  // help: { type: "text", action: " I can't" }
 };
 
 export default keywords;

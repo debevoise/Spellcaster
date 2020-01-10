@@ -88,10 +88,13 @@ export class Snake {
 
     eat(pos) {
         let snack = this.grid.getElement(pos).firstChild;
-
         this.body.push(snack);
-
     }
+
+    generateRandomSpell() {
+        let utilSpell = new Spell(this.grid);
+        utilSpell.generateRandomSpell();
+    };
 
     render() {
         this.clearPreviousRender();

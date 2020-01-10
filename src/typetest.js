@@ -259,7 +259,6 @@ export class TypeTest {
         }
         
         this.render();
-        console.log(this.input);
     }
 
 } 

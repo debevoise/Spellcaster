@@ -132,8 +132,6 @@ export default class Grid {
         inst.storedText = "press esc to exit";
         inst.currentPos = [1, 1];
         this.currentSpell = inst;
-        console.log(inst)
-
         if (this.typetest) this.typetest.clearPreviousRender();
         this.typetest = new TypeTest(this);
         this.typetest.render();

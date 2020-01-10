@@ -20,8 +20,6 @@ export function replaceChildren(parent, child) {
     parent.appendChild(child);
 }
 
-
-
 export function equalCoordinates(a1, a2) {
     return a1[0] === a2[0] && a1[1] === a2[1];
 }
@@ -73,5 +71,4 @@ export function toEmoji(str) {
 
     let code = str.charCodeAt(0) - 97;
     return EMOJIS[code];
-
 }
