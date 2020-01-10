@@ -31,6 +31,7 @@ const keywords = {
   hello: { type: "text", action: "world" },
   madeby: { type: "text", action: " simon debevoise" },
   foo: { type: "text", action: "bar" },
+  explode: { type: "explode" }
   // help: { type: "text", action: " I can't" }
 };
 

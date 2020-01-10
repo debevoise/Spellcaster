@@ -38,7 +38,7 @@ export default class Spell {
 
     cast(keywords) {
         if (!(keywords instanceof Array)) keywords = [keywords];
-        const notStored = ['all', 'clear', 'spell', 'snake', 'test'];
+        const notStored = ['all', 'clear', 'spell', 'snake', 'test', 'explode'];
 
         keywords.forEach(kw => {
             this.applyKeyword(kw);
@@ -47,6 +47,7 @@ export default class Spell {
     }
 
     applyKeyword(kw) {
+        if (!this.keywordIndex[kw]) return;
         let { action, type } = this.keywordIndex[kw];
         
         switch (type) {
@@ -109,6 +110,39 @@ export default class Spell {
             case 'typetest':
                 this.grid.playTypetest();
                 break;
+            case 'explode':
+                let delta;
+                if (this.moves[0] === 0 && this.moves[1] === 0) {
+                    delta = [0, 1];
+                } else {
+                    delta = this.moves
+                }
+
+                let pos = this.currentPos;
+
+                for (let i = 0; i < this.storedText.length; i++) {
+                    let char = this.storedText[i];
+                    let spell = new Spell(this.grid);
+                    spell.cast(this.appliedKeywords);
+                    spell.currentPos = pos;
+                    spell.exploded = true;
+                    let dirs = [ 'left', 'up', 'right', 'down' ]
+                    let appliedDirs = [];
+                    let firstDirIdx = Math.floor((i % 8) / 2);
+                    appliedDirs.push(dirs[firstDirIdx]);
+                    if (i % 2 === 1) appliedDirs.push(dirs[(firstDirIdx + 1) % 4])
+
+                    spell.cast(appliedDirs);
+                    spell.storedText = char;
+                    
+                    this.grid.spells.push(spell);
+
+                    pos = Util.addCoordinates(pos, delta);
+                }   
+
+                this.storedText = "";
+
+                break;
             default:
                 break;
         }
@@ -170,8 +204,10 @@ export default class Spell {
         return spell;
     }
 
+
     render() {
         this.clearPreviousRender();
+
 
         let text = this.storedText + this.activeText;
         let pos = this.currentPos;
@@ -192,7 +228,11 @@ export default class Spell {
             span.classList.add(this.font, this.rotate, 'active', ...this.classArr);
             span.style.fontSize = this.size + 'px';
             span.style.backgroundColor = this.shuffleColors();
-            if (this.colors.length > 0) span.style.color = 'white'; 
+
+            if (this.colors.length > 0) {
+                span.style.color = 'white'; 
+            } else if (this.exploded) span.style.color = "#de481b";
+            
             const element = this.grid.getElement(pos);
             
             Util.replaceChildren(element, span);

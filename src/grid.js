@@ -210,10 +210,19 @@ export default class Grid {
           this.updateCurrentPosition(e.keyCode);
         }
 
-        
-    } 
+    }
+    
+    trimSpells() {
+        if (this.spells.length < 100) return;
+        let diff = this.spells.length - 100;
+        for (let i = 0; i < diff; i++) {
+            this.spells[i].clearPreviousRender();
+        }
+        this.spells = this.spells.slice(diff);
+    }
 
     frame() {
+        this.trimSpells();
         this.spells.forEach(spell => spell.move());
     
         this.currentSpell.move();
