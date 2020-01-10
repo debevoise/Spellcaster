@@ -126,10 +126,18 @@ export default class Grid {
 
     playTypetest() {
         // clearTimeout(this.timeout);
+        this.spells.push(this.currentSpell);
+        let inst = new Spell(this);
+        inst.cast(["right", "green"]);
+        inst.storedText = "press esc to exit";
+        inst.currentPos = [1, 1];
+        this.currentSpell = inst;
+        console.log(inst)
+
         if (this.typetest) this.typetest.clearPreviousRender();
         this.typetest = new TypeTest(this);
         this.typetest.render();
-        // this.spells.push(this.currentSpell);
+        
         // this.currentSpell = null;
     }
 
@@ -143,7 +151,8 @@ export default class Grid {
 
     receiveClick(pos) {
         if (this.snakeMode()) return;
-        if (this.currentSpell) this.currentSpell.currentPos = pos;
+        let posArr = pos.split(",").map(i => parseInt(i));
+        if (this.currentSpell) this.currentSpell.currentPos = posArr;
     }
 
     updateCurrentPosition(keycode) {
@@ -182,6 +191,11 @@ export default class Grid {
     }
 
     receiveInput(e) {
+        if (e.keyCode === 27) {
+            if (this.currentSpell) this.currentSpell.clearPreviousRender();
+            this.currentSpell = new Spell(this); 
+        }
+
         if (this.typetest) {
           this.typetest.receive(e);
         } else if (e.keyCode === 13 || e.keyCode === 32) {
@@ -201,11 +215,11 @@ export default class Grid {
 
     frame() {
         this.spells.forEach(spell => spell.move());
-        
-        if (this.typetest) {
-            this.typetest.render()
-        }
+    
         this.currentSpell.move();
+        if (this.typetest) {
+            this.typetest.render();
+        }
     }
 
 

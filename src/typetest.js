@@ -4,7 +4,6 @@ import { replaceChildren, addCoordinates } from "./util";
 export class TypeTest {
     constructor(grid) {
         this.grid = grid;
-
         this.width = Math.floor(this.grid.width * 0.7);
         // this.height = Math.floor(this.grid.height * 0.8); 
         this.pos = this.calculatePos();

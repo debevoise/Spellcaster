@@ -109,12 +109,6 @@ export default class Spell {
                 this.grid.spells.forEach(spell => spell.cast(this.appliedKeywords));
                 break;
             case 'typetest':
-                let inst = new Spell(this.grid);
-                inst.cast(['right', 'green']);
-                inst.storedText = 'press esc to exit';
-                inst.currentPos = [1,1];
-                this.grid.currentSpell = inst;
-
                 this.grid.playTypetest();
                 break;
             default:
