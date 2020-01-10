@@ -1,16 +1,16 @@
-.cell > span {
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    height: 100%;
-    width: 100%;
-    color: rgb(0, 55, 206);
-}
 
 .cursor {
     box-sizing: border-box;
-    border: 2px solid #c8052f;
-
+    border: 1px solid rgb(206, 82, 0);
+    box-shadow: 0px 0px 3px rgb(206, 82, 0);
+    display: block;
+    min-height: 106%;
+    min-width: 108%;
+    position: absolute;
+    right: -1px;
+    animation-name: blink;
+    animation-duration: 800ms;
+    animation-iteration-count: infinite;
 }
 
 .comic {
@@ -30,7 +30,7 @@
 }
 
 .snake {
-    border: 2px solid indigo;
+    border: 3px solid rgb(4, 93, 16);
     box-sizing: border-box;
 }
 
@@ -39,35 +39,11 @@
 }
 
 .snakehead {
-  background-color: indigo;
+  background-color: rgb(122, 0, 116);
+  border: 3px solid rgb(122, 0, 116);
 }
 
 .circle {
   border-radius: 50%;
-}
-
-.rotate {
-	animation: clock 200ms linear infinite 0s;
-	-ms-animation: clock 200ms linear infinite 0s;
-	-webkit-animation: clock 200ms linear infinite 0s;
-
-	overflow: hidden;
-
-}
-
-
-@-moz-keyframes clock{
-	0% { opacity: 1; }
-	50% { opacity: 1; -moz-transform: rotate(-180deg); }
-
-}
-@-webkit-keyframes clock{
-	0% { opacity: 1; }
-	50% { opacity: 1; -webkit-transform: rotate(-180deg); }
-}
-@-ms-keyframes clock{
-	0% { opacity: 1; -ms-transform: rotate(-180deg); }
-	50% { opacity: 1; -ms-transform: rotate(-180deg); }
-
 }
 

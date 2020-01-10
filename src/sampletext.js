@@ -1004,7 +1004,6 @@ let whitespace = /[\r\n]+/;
 let words = top1000.split(whitespace);
 let validwords = words.filter(word => word.length > 2);
 
-export const sampleText = (range = 1000) => {
-  console.log(words.length);
+export const sampleText = (range = validwords.length) => {
   return validwords.slice(0, range);
 };

@@ -2,11 +2,27 @@
     height: 25px;
     width: 25px;
     box-sizing: border-box;
-    
+    position: relative;
     display: flex;
     justify-content: center;
     align-items: center;
 }
+
+.cell:hover {
+    background-color:#ffd2ae;
+    cursor: default;
+}
+
+.cell > span {
+    cursor: default;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    height: 100%;
+    width: 100%;
+    color: rgb(0, 55, 206);
+}
+
 
 .cell:nth-child(even) {
     border-right: 1px dashed #ffa600;
@@ -28,6 +44,3 @@
     border-bottom: 1px dashed rgb(0, 55, 206);
 }
 
-.row:last-of-type {
-    border-bottom: 2px solid #c8052f;
-}

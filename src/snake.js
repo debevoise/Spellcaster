@@ -5,17 +5,19 @@ export class Snake {
     constructor(grid, position) {
         this.moves = [0,0];
         this.positions = [position];
-        
         this.renderedElements = [];
+        this.grid = grid;
+
         let head = document.createElement("span");
         head.className = 'snakehead';
         head.innerText = "🐍";
         this.body = [head]; // [{ element: <span>, pos: }]
-        this.grid = grid;
+
         let inst = new Spell(this.grid);
         inst.storedText = 'arrow keys to move';
         inst.moves = [0, 1];
-        inst.cast(['red', 'blue']);
+        inst.cast(['green', 'blue']);
+        this.inst = inst;
         this.grid.spells.push(inst);
     }
 
@@ -29,13 +31,13 @@ export class Snake {
     }
 
     handleLoss() {
-
         this.clearPreviousRender();
-        let loserSpell = new Spell(this.grid);
-
-        loserSpell.cast(['circle','blue','sans','right','big']);
-        loserSpell.storedText = 'Game over: ' + (this.body.length - 1) + ' POINTS';
-        this.grid.spells.push(loserSpell);
+        let loserSpell = this.inst;
+        
+        loserSpell.cast(['orange','fun','big','big','big']);
+        let score = this.body.length - 1;
+        let points = score === 1 ? ' point' : ' points';
+        loserSpell.storedText = 'Game over: ' + (this.body.length - 1) + points;
         this.grid.currentSpell = new Spell(this.grid);
     }
 
@@ -72,6 +74,15 @@ export class Snake {
             this.positions.pop();
         }
         this.render();
+    }
+
+    receiveInput(delta) {
+        let combinedDirs = addCoordinates(delta, this.moves);
+        let oppositeDir = combinedDirs[0] === 0 && combinedDirs[1] === 0;
+
+        if (this.positions.length === 1 || !oppositeDir) { 
+            this.moves = delta;
+        } 
         
     }
 
@@ -81,8 +92,6 @@ export class Snake {
         this.body.push(snack);
 
     }
-
-
 
     render() {
         this.clearPreviousRender();
@@ -95,9 +104,5 @@ export class Snake {
 
             this.renderedElements.push(child);
         })
-
     }
-
-
-
 }

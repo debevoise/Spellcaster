@@ -173,14 +173,16 @@ export default class Grid {
             delta = [1, 0];
             break;
         }
+        
 
         if (this.snakeMode()) {
-            this.currentSpell.moves = delta;
+            this.currentSpell.receiveInput(delta);
             return;
         }
 
         let { currentPos } = this.currentSpell;
         this.currentSpell.currentPos = Util.addCoordinates(delta, currentPos);
+        this.currentSpell.render();
     }
 
     randomPosition() {

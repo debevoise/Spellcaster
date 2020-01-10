@@ -23,14 +23,15 @@ const keywords = {
   blue: { type: "color", action: "#5798ad" },
   green: { type: "color", action: "#57ad6e" },
   yellow: { type: "color", action: "#dbc035" },
+  purple: { type: "color", action: "#9d64e3" },
+  orange: { type: "color", action: "#e67e39" },
+  pink: { type: "color", action: "#f20aee" },
+  black: { type: "color", action: "#222e2c" },
   red: { type: "color", action: "#de481b" },
   emoji: { type: "emoji" },
   hello: { type: "text", action: "world" },
-  about: { type: 'text', action: "made by simon debevoise" },
-  tobe: { type: 'text', action: '...or not to be'},
-  foo: { type: 'text', action: 'bar' }
-  
-
+  madeby: { type: "text", action: " simon debevoise" },
+  foo: { type: "text", action: "bar" }
 };
 
 export default keywords;

@@ -7,13 +7,13 @@ export default class Spell {
         this.perFrameKeywords = [];
         this.appliedKeywords = [];
         this.grid = grid;
-
-
         this.currentPos = this.grid.randomPosition();
 
         this.storedText = '';
         this.activeText = '';
+        
         this.keywordIndex = keywordIndex;
+
         this.rotate = null;
         this.classArr = [];
         this.moves = [0,0];
