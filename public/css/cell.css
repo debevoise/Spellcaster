@@ -1,17 +1,14 @@
 
 .cursor {
     box-sizing: border-box;
-    border: 1px solid rgb(206, 82, 0);
-    box-shadow: 0px 0px 3px rgb(206, 82, 0);
+    border: 2px solid rgb(206, 82, 0);
+    /* box-shadow: 0px 0px 3px rgb(206, 82, 0); */
     display: block;
-    min-height: 106%;
-    min-width: 108%;
+    /* min-height: 106%;
+    min-width: 108%; */
     position: absolute;
-    right: -1px;
+    /* right: -1px; */
     z-index: 2;
-    animation-name: blink;
-    animation-duration: 800ms;
-    animation-iteration-count: infinite;
 }
 
 .comic {
