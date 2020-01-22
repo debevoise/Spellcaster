@@ -30,7 +30,24 @@ Cast spells with words! In Spellcaster, a user can chain sequences of keywords t
 #### Test your typing speed with TypeTest
 ![main view](public/media/typetest.gif)
 
-Type test randomly generates 
+Type test randomly generates text from a list of the 1000 most commonly used english words. After a minute of typing, the sub-feature calculates the number of correct words typed per minute. 
+
+```js
+    ensureUserWords() {
+        if (this.userWords.length < 50 + this.currentWord) {
+            for (let i = 0; i <= 50; i++) {
+                let randIdx = Math.floor(Math.random() * this.topWords.length);
+                let randWord = this.topWords[randIdx];
+                let word = {
+                    word: randWord,
+                    mistyped: false
+                }
+                
+                this.userWords.push(word);
+            } 
+        }
+    }
+```
 
 ## Technologies
 
