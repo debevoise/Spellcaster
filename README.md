@@ -1,35 +1,57 @@
 # Spellcaster
 
-Cast spells with words! In Spellcaster, a user can chain sequences of keywords that effects the properties of a 'spell'. These spells move about and effect a grid of cells that contain either a character or nothing at all. For example, the spell 'upfooupleftredbar' contains the keywords 'up', 'up', 'left', 'red', which determines that the spell will have a red background and will move up 2 spaces and left 1 space per animation frame. By pressing space, a user releases that spell and can start a new one. Spells take effect even as a user is creating one, so the cursor will move with the spell. Ultimately, the grid will be populated with various spells that are changing dynamically. 
+[Click here to see it live!](https://www.simondebevoise.com/Spellcaster)
+
+![main view](public/media/demo.gif)
+
+Cast spells with words! In Spellcaster, a user can chain sequences of keywords that effects the properties of a 'spell'. These spells move about and effect a grid of cells that contain either a character or nothing at all. For example, the spell 'upfooupleftredbar' contains the keywords 'up', 'up', 'left', 'red', which determines that the spell will have a red background and will move up 2 spaces and left 1 space per animation frame. By pressing space, a user releases that spell and can start a new one. Spells take effect even as a user is creating one, so the cursor will move with the spell. After a few spells, the grid should be full of fun, zany spells!
 
 #### Example keywords: 
 
 * up, down, left, right - determines direction
-* all, last, clear - effects preexisting spells
+* all, clear - effects preexisting spells
 * mono, sans, serif - sets font type
-* big, small - sets font size
+* big, small - increases / decreases font size
 * blue, red, green, yellow - changes background color
-* smile, frown, eggplant - creates emoji spells with corresponding properties
-* two, three, four, five - creates that many instances of current spell
+* emoji - converts text to emoji keyboard
 * spell - creates random spell
-* bounce - bounces off walls
 * explode - letters of spell each go off in random direction
+* type, test - a 60-second typing speed race that counts words per minute
+* snake - player-controlled snake ‘eats’ and appends colorful, styled HTML elements to its body.
 
-#### Preliminary mockup
+![main view](public/media/example.gif)
 
-![mockup](https://github.com/debevoise/SpellCaster/blob/master/public/mockups/Screen%20Shot%202020-01-06%20at%2012.20.16%20PM.png)
 
-## Functionality/MVP
+## What the heck is going on?
 
-* informational section with about and help tutorial
-* interpret spells and change styling correspondingly
-* enable grid animations that render spells at given framerate
-* tutorial mode: prepopulates with spells that demonstrate functionality
-* create dynamic grid that updates height and witdh with window change
+#### Dropdown menus with information on how to play
+![main view](public/media/menus.gif)
+
+#### Test your typing speed with TypeTest
+![main view](public/media/typetest.gif)
+
+Type test randomly generates text from a list of the 1000 most commonly used english words. After a minute of typing, the sub-feature calculates the number of correct words typed per minute. 
+
+```js
+    ensureUserWords() {
+        if (this.userWords.length < 50 + this.currentWord) {
+            for (let i = 0; i <= 50; i++) {
+                let randIdx = Math.floor(Math.random() * this.topWords.length);
+                let randWord = this.topWords[randIdx];
+                let word = {
+                    word: randWord,
+                    mistyped: false
+                }
+                
+                this.userWords.push(word);
+            } 
+        }
+    }
+```
 
 ## Technologies
 
-This app won't depend heavily on external libraries beyond Webpack. Technologies will include Javascript for spell and Grid logic as well as HTML and CSS for structure and styling. 
+Plain ol' JavaScript, HTML, and CSS! The only external libraries on which Spellcaster depends are Webpack and Babel. I had become really comfortable with React, jQuery, Sass and wanted to challenge myself to create a website using just vanilla JS and DOM manipulation.
 
 #### Game structure
 
@@ -42,9 +64,6 @@ This app won't depend heavily on external libraries beyond Webpack. Technologies
     * handles parsing text, dispatching action if scope is beyond the individual spell
     * contains properties that correspond to spell actions
     
-## Timeline
-
-* Monday: install dependencies, set up file structure, create basic html structure
-* Tuesday: flesh out grid class, create spell class and work through logic.
-* Wednesday: handle rendering and animation
-* Thursday: set up tutorial session
+    
+![main view](public/media/madeby.gif)
+    
