@@ -224,9 +224,7 @@ export default class Spell {
             const letter = this.emoji ? Util.toEmoji(text[i]) : text[i];
             const span = document.createElement('span');
 
-            if (!this.emoji) {   
-                span.textContent = letter.toUpperCase();
-            }
+            span.textContent = this.emoji ? letter : letter.toUpperCase();
             span.classList.add(this.font, this.rotate, 'active', ...this.classArr);
             span.style.fontSize = this.size + 'px';
             span.style.backgroundColor = this.shuffleColors();
