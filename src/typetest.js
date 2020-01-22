@@ -37,13 +37,13 @@ export class TypeTest {
 
     calculateWPM() {
         if (!this.currentTime) return 0;
-        let correctKeystrokes = 0;
+        let correctKeystrokes = this.currentWord; //Num spaces pressed
 
         for (let i = 0; i < this.currentWord; i++) {
             let word = this.userWords[i];
 
             if (!word.mistyped) {
-                correctKeystrokes += (word.word.length + 1);
+                correctKeystrokes += (word.word.length);
             }
         }
 
