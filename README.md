@@ -1,6 +1,6 @@
 # Spellcaster
 
-[Click here to see it live!](https://www.simondebevoise.com/Spellcaster)
+[Click here to see it live!](https://v1.simondebevoise.com/Spellcaster)
 
 ![main view](public/media/demo.gif)
 
